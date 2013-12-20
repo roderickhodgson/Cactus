@@ -226,12 +226,13 @@ class Site(object):
 			# When we have changes, we want to refresh the browser tabs with the updates.
 			# Mostly we just refresh the browser except when there are just css changes,
 			# then we reload the css in place.
-			if  len(changes["added"]) == 0 and \
-				len(changes["deleted"]) == 0 and \
-				set(map(lambda x: os.path.splitext(x)[1], changes["changed"])) == set([".css"]):
-				browserReloadCSS('http://127.0.0.1:%s' % port)
-			else:
-				browserReload('http://127.0.0.1:%s' % port)
+			if browser:
+				if  len(changes["added"]) == 0 and \
+					len(changes["deleted"]) == 0 and \
+					set(map(lambda x: os.path.splitext(x)[1], changes["changed"])) == set([".css"]):
+					browserReloadCSS('http://127.0.0.1:%s' % port)
+				else:
+					browserReload('http://127.0.0.1:%s' % port)
 			
 			self.listener.resume()
 	
